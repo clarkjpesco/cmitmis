@@ -5,6 +5,8 @@
   },
   "deploy": {
     "startCommand": "php cli.php && php -S 0.0.0.0:${PORT:-8000} -t public",
-    "restartPolicyType": "ON_FAILURE"
+    "restartPolicyType": "ON_FAILURE",
+    "healthcheckPath": "/",
+    "healthcheckTimeout": 100
   }
 }
