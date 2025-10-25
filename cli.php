@@ -71,7 +71,7 @@ try {
         ['laed', 'Liberal Arts in Education', "Refers to college studies that provide general knowledge and develop intellectual ability. This type of education can prepare you for many fields in today's workplace."],
         ['bsba', 'Bachelor of Science in Business Administration', "Degree program in General Management is a 120-credit program designed for students interested in having exposure to a number of business areas rather than focusing in depth on just one."],
         ['bsa', 'Bachelor of Science in Accountancy', "Is composed of subjects in accounting ( financial, public, managerial), audit, administration, business laws and taxation."],
-        ['fpst', 'Food Preparation & Service Technology', "Is a 2 years degree program which deals with the scientific preparation, processing and distribution of foods. It is also concerned with the improvement of food products’ flavor, appearance, storage qualities as well as in the control of quality changes during processing, marketing and distribution."]
+        ['fpst', 'Food Preparation & Service Technology', "Is a 2 years degree program which deals with the scientific preparation, processing and distribution of foods. It is also concerned with the improvement of food products flavor, appearance, storage qualities as well as in the control of quality changes during processing, marketing and distribution."]
 
     ];
 
