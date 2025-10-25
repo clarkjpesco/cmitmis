@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: cmitmis
+    env: php
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "php -S 0.0.0.0:10000 -t public"
+    envVars:
+      - key: DB_DRIVER
+        value: mysql
+      - key: DB_HOST
+        fromDatabase:
+          name: cmitmis-db
+          property: host
+      - key: DB_USER
+        fromDatabase:
+          name: cmitmis-db
+          property: user
+      - key: DB_PASS
+        fromDatabase:
+          name: cmitmis-db
+          property: password
+      - key: DB_NAME
+        fromDatabase:
+          name: cmitmis-db
+          property: database
+      - key: DB_PORT
+        fromDatabase:
+          name: cmitmis-db
+          property: port
+
+databases:
+  - name: cmitmis-db
+    plan: free

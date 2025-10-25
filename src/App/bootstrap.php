@@ -9,8 +9,14 @@ use App\Config\Paths;
 use Dotenv\Dotenv;
 use function App\Config\{registerRoutes, registerMiddleware};
 
-$dotenv = Dotenv::createImmutable(Paths::ROOT);
-$dotenv->load();
+// Load environment variables - with fallback for Render
+try {
+    $dotenv = Dotenv::createImmutable(Paths::ROOT);
+    $dotenv->load();
+} catch (Exception $e) {
+    // If .env doesn't exist, rely on environment variables (for Render)
+    error_log('Dotenv load failed: ' . $e->getMessage());
+}
 
 $app = new App(Paths::SOURCE . "App/container-definitions.php");
 

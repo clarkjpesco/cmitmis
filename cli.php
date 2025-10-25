@@ -1,24 +1,48 @@
 <?php
 
+// Add error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require __DIR__ . "/vendor/autoload.php";
 
 use Framework\Database;
 use Dotenv\Dotenv;
 use App\Config\Paths;
 
-$dotenv = Dotenv::createImmutable(Paths::ROOT);
-$dotenv->load();
+// Load environment variables with error handling
+try {
+    $dotenv = Dotenv::createImmutable(Paths::ROOT);
+    $dotenv->load();
+} catch (Exception $e) {
+    // Continue with environment variables
+    error_log('Dotenv warning: ' . $e->getMessage());
+}
 
 
 
 try {
+    // Check if required database environment variables are set
+    $requiredEnvVars = ['DB_DRIVER', 'DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER', 'DB_PASS'];
+    foreach ($requiredEnvVars as $var) {
+        if (empty($_ENV[$var]) && empty(getenv($var))) {
+            throw new Exception("Required environment variable {$var} is not set");
+        }
+    }
 
-    $db = new Database($_ENV['DB_DRIVER'], [
-        'host' => $_ENV['DB_HOST'],
-        'port' => $_ENV['DB_PORT'],
-        'dbname' => $_ENV['DB_NAME']
-    ], $_ENV['DB_USER'], $_ENV['DB_PASS']);
+    // Use getenv as fallback
+    $dbDriver = $_ENV['DB_DRIVER'] ?? getenv('DB_DRIVER');
+    $dbHost = $_ENV['DB_HOST'] ?? getenv('DB_HOST');
+    $dbPort = $_ENV['DB_PORT'] ?? getenv('DB_PORT');
+    $dbName = $_ENV['DB_NAME'] ?? getenv('DB_NAME');
+    $dbUser = $_ENV['DB_USER'] ?? getenv('DB_USER');
+    $dbPass = $_ENV['DB_PASS'] ?? getenv('DB_PASS');
 
+    $db = new Database($dbDriver, [
+        'host' => $dbHost,
+        'port' => $dbPort,
+        'dbname' => $dbName
+    ], $dbUser, $dbPass);
 
     // Execute the main database schema
     $sqlFile = file_get_contents("./database.sql");
@@ -70,5 +94,6 @@ try {
     echo "Default data inserted:\n";
     echo "- courses: bsit, bsn, laed,bsba, bsa, fpst\n";
 } catch (Exception $e) {
+    error_log("Setup failed: " . $e->getMessage());
     die("Setup failed: " . $e->getMessage());
 }
