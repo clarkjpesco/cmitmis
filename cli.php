@@ -38,7 +38,7 @@ try {
     $dbUser = $_ENV['DB_USER'] ?? getenv('DB_USER');
     $dbPass = $_ENV['DB_PASS'] ?? getenv('DB_PASS');
 
-    $db = new Database($dbDriver, [
+    $db = new Database('pgsql', [
         'host' => $dbHost,
         'port' => $dbPort,
         'dbname' => $dbName
