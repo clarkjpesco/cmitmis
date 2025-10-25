@@ -23,6 +23,7 @@
   },
   "scripts": {
     "cmitmis": "php cli.php",
-    "post-deploy": "php cli.php"
+     "post-install-cmd": "php cli.php",
+        "post-update-cmd": "php cli.php"
   }
 }
