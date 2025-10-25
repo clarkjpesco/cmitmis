@@ -1,19 +1,15 @@
 #!/usr/bin/env bash
-
-# Exit on error
 set -o errexit
 
 echo "Installing PHP dependencies..."
 composer install --no-dev --optimize-autoloader
 
-echo "Creating storage directories..."
-mkdir -p storage/uploads
-mkdir -p /tmp/sessions
-chmod -R 755 storage
-chmod -R 755 /tmp/sessions
+echo "Creating directories..."
+mkdir -p storage/uploads /tmp/sessions
+chmod -R 755 storage /tmp/sessions
 
 echo "Setting up database..."
-# Only run database setup if not already set up
-php cli.php || echo "Database setup completed or skipped"
+# Run database setup (will fail on build but that's okay - it'll run on startup)
+php cli.php || echo "Database setup will run on application startup"
 
 echo "Build completed successfully!"

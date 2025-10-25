@@ -1,10 +1,9 @@
 services:
   - type: web
     name: cmitmis
-    env: php
+    env: docker
     plan: free
-    buildCommand: "./build.sh"
-    startCommand: "php -S 0.0.0.0:10000 -t public"
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: DB_DRIVER
         value: mysql
