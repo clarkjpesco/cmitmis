@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS courses (
     id INT AUTO_INCREMENT PRIMARY KEY,
     code VARCHAR(20) UNIQUE NOT NULL,
     name VARCHAR(100) UNIQUE NOT NULL,
-    description VARCHAR(255) NULL,
+    description TEXT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS subjects (
     id INT AUTO_INCREMENT PRIMARY KEY,
     code VARCHAR(20) UNIQUE,
     name VARCHAR(100),
-    description VARCHAR(255) NULL,
+    description TEXT NULL,
     units INT,
     status ENUM('active','inactive') NOT NULL DEFAULT 'active'
 );
@@ -100,4 +100,3 @@ CREATE TABLE IF NOT EXISTS import_progress (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
-
