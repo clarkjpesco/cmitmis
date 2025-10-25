@@ -59,7 +59,12 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
                         <div class="w-10 h-10 rounded-lg flex items-center justify-center">
-                            <img src="/assets/img/logo.png" />
+                            <?php
+                            // Cache-busting: adds version based on file modification time
+                            $logoPath = __DIR__ . '/../public/assets/img/logo.png';
+                            $version = file_exists($logoPath) ? filemtime($logoPath) : '1';
+                            ?>
+                            <img src="/assets/img/logo.png?v=<?php echo $version; ?>" alt="Logo" />
                         </div>
                         <span class="ml-3 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Student Portal</span>
                     </div>
