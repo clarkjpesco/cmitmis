@@ -1,0 +1,22 @@
+{
+    "name": "user/cmitmis",
+    "description": "The College of Maasin Student Monitoring Information System for BSIT Department",
+    "type": "project",
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "phpoffice/phpspreadsheet": "^5.1"
+    },
+    "autoload":{
+        "psr-4":{
+            "Framework\\": "src/Framework",
+            "App\\": "src/App"
+        },
+        "files":[
+            "src/App/Config/Routes.php",
+            "src/App/Config/Middleware.php"
+        ]
+    },
+    "scripts":{
+        "cmitmis":"php cli.php"
+    }
+}
