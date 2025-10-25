@@ -69,8 +69,6 @@
                         <span class="ml-3 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Student Portal</span>
                     </div>
                     <div class="hidden md:ml-10 md:flex md:space-x-1">
-
-
                         <a href="/student/dashboard" class="<?php echo e(($active ?? '') === 'dashboard' ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'); ?>  px-4 py-2 rounded-lg text-sm font-medium transition-all">
                             <i class="fas fa-home mr-2"></i>Dashboard
                         </a>
@@ -105,29 +103,32 @@
                             <a href="/student/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 transition-colors">
                                 <i class="fas fa-user mr-2"></i>My Profile
                             </a>
-
                             <hr class="my-2">
                             <a href="/logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
                                 <i class="fas fa-sign-out-alt mr-2"></i>Logout
                             </a>
                         </div>
                     </div>
+                    <!-- Hamburger Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
                 </div>
             </div>
         </div>
         <!-- Mobile menu -->
-        <div class="md:hidden border-t border-gray-200">
+        <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="/student/dashboard" class="bg-blue-50 text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
+                <a href="/student/dashboard" class="<?php echo e(($active ?? '') === 'dashboard' ? 'bg-blue-50 text-blue-600 ' : 'text-gray-700 hover:bg-gray-50'); ?>  block px-3 py-2 rounded-md text-base font-medium">
                     <i class="fas fa-home mr-2"></i>Dashboard
                 </a>
-                <a href="/student/schedule" class="text-gray-700 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">
+                <a href="/student/schedule" class="<?php echo e(($active ?? '') === 'schedule' ? 'bg-blue-50 text-blue-600 ' : 'text-gray-700 hover:bg-gray-50'); ?>  block px-3 py-2 rounded-md text-base font-medium">
                     <i class="fas fa-calendar-alt mr-2"></i>Schedule
                 </a>
-                <a href="/student/grades" class="text-gray-700 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">
+                <a href="/student/grades" class="<?php echo e(($active ?? '') === 'grades' ? 'bg-blue-50 text-blue-600 ' : 'text-gray-700 hover:bg-gray-50'); ?>  block px-3 py-2 rounded-md text-base font-medium">
                     <i class="fas fa-chart-line mr-2"></i>Grades
                 </a>
-                <a href="/student/enrollments" class="text-gray-700 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">
+                <a href="/student/enrollments" class="<?php echo e(($active ?? '') === 'enrollments' ? 'bg-blue-50 text-blue-600 ' : 'text-gray-700 hover:bg-gray-50'); ?>  block px-3 py-2 rounded-md text-base font-medium">
                     <i class="fas fa-book-open mr-2"></i>Enrollments
                 </a>
             </div>

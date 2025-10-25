@@ -7,6 +7,26 @@
   </div>
 </footer>
 
+<script>
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const menuIcon = mobileMenuBtn.querySelector('i');
+
+  mobileMenuBtn.addEventListener('click', function() {
+    mobileMenu.classList.toggle('hidden');
+
+    // Toggle between hamburger and X icon
+    if (mobileMenu.classList.contains('hidden')) {
+      menuIcon.classList.remove('fa-times');
+      menuIcon.classList.add('fa-bars');
+    } else {
+      menuIcon.classList.remove('fa-bars');
+      menuIcon.classList.add('fa-times');
+    }
+  });
+</script>
+
 </body>
 
 </html>
