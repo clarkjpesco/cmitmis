@@ -535,14 +535,25 @@ class ClassesService
         return $currentSemester;
     }
 
+    // public function getAllSchoolYear()
+    // {
+    //     $schoolYears = $this->db->query(
+    //         "SELECT DISTINCT school_year
+    //      FROM schedules
+    //      ORDER BY created_at DESC"
+    //     )->findAll();
+
+    //     return $schoolYears;
+    // }
+
     public function getAllSchoolYear()
     {
+        // Option 1: Order by school_year itself (recommended)
         $schoolYears = $this->db->query(
             "SELECT DISTINCT school_year
          FROM schedules
-         ORDER BY created_at DESC"
+         ORDER BY school_year DESC"
         )->findAll();
-
         return $schoolYears;
     }
 
