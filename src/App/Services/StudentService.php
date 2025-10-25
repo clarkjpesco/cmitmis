@@ -16,15 +16,21 @@ class StudentService
     public function __construct(private Database $db)
     {
         // Create a separate connection for progress updates
+        $host = $_ENV['MYSQLHOST'] ?? $_ENV['DB_HOST'] ?? 'localhost';
+        $port = $_ENV['MYSQLPORT'] ?? $_ENV['DB_PORT'] ?? '3306';
+        $database = $_ENV['MYSQLDATABASE'] ?? $_ENV['DB_NAME'] ?? 'cmitmis';
+        $username = $_ENV['MYSQLUSER'] ?? $_ENV['DB_USER'] ?? 'root';
+        $password = $_ENV['MYSQLPASSWORD'] ?? $_ENV['DB_PASS'] ?? '';
+
         $this->progressDb = new Database(
-            $_ENV['DB_DRIVER'],
+            $_ENV['DB_DRIVER'] ?? 'mysql',
             [
-                'host' => $_ENV['DB_HOST'],
-                'port' => $_ENV['DB_PORT'],
-                'dbname' => $_ENV['DB_NAME']
+                'host' => $host,
+                'port' => $port,
+                'dbname' => $database
             ],
-            $_ENV['DB_USER'],
-            $_ENV['DB_PASS']
+            $username,
+            $password
         );
     }
 
