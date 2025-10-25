@@ -65,6 +65,22 @@ try {
     }
 
     echo "Schema created successfully!\n";
+
+    // Create admin user
+    $hashedPassword = password_hash("admin123", PASSWORD_DEFAULT);
+    $existingAdmin = $db->query("SELECT id FROM users WHERE username = 'admin'")->find();
+
+    if (!$existingAdmin) {
+        $db->query(
+            "INSERT INTO users (username, password, role, full_name) VALUES (?,?,?,?)",
+            ['admin', $hashedPassword, 'admin', 'System Administrator']
+        );
+        echo "Admin user created successfully!\n";
+    } else {
+        echo "Admin user already exists.\n";
+    }
+
+
     $courses = [
         ['bsit', 'Bachelor of Science in Information Technology', 'Prepares student to be IT professionals who are able to perform installation, operation, development, maintenance, and administration of computer applications'],
         ['bsn', 'Bachelor of Science in Nursing', 'Includes the assessment of patient health problems, developing and implementing nursing care plans, and maintaining medical records. They also administer nursing care to the ill, injured, convalescent, or disabled patients'],
@@ -87,19 +103,7 @@ try {
         }
     }
 
-    // Create admin user
-    $hashedPassword = password_hash("admin123", PASSWORD_DEFAULT);
-    $existingAdmin = $db->query("SELECT id FROM users WHERE username = 'admin'")->find();
 
-    if (!$existingAdmin) {
-        $db->query(
-            "INSERT INTO users (username, password, role, full_name) VALUES (?,?,?,?)",
-            ['admin', $hashedPassword, 'admin', 'System Administrator']
-        );
-        echo "Admin user created successfully!\n";
-    } else {
-        echo "Admin user already exists.\n";
-    }
 
     echo "\n=================================\n";
     echo "Database setup completed successfully!\n";
