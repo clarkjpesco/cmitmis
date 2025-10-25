@@ -32,7 +32,12 @@
         <div class="w-64 bg-gray-800 text-gray-100">
             <div class="p-4 text-2xl font-bold border-b border-gray-700">
                 <div class="w-20 h-20 rounded-full flex items-center justify-center shadow-md mx-auto">
-                    <img src="/assets/img/logo.png" />
+                    <?php
+                    // Cache-busting: adds version based on file modification time
+                    $logoPath = __DIR__ . '/../public/assets/img/logo.png';
+                    $version = file_exists($logoPath) ? filemtime($logoPath) : '1';
+                    ?>
+                    <img src="/assets/img/logo.png?v=<?php echo $version; ?>" alt="Logo" />
                 </div>
             </div>
             <nav class="p-4">
