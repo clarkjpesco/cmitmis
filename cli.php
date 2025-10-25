@@ -22,27 +22,21 @@ try {
 
 
 try {
-    // Check if required database environment variables are set
-    $requiredEnvVars = ['DB_DRIVER', 'DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER', 'DB_PASS'];
-    foreach ($requiredEnvVars as $var) {
-        if (empty($_ENV[$var]) && empty(getenv($var))) {
-            throw new Exception("Required environment variable {$var} is not set");
-        }
-    }
 
-    // Use getenv as fallback
-    $dbDriver = $_ENV['DB_DRIVER'] ?? getenv('DB_DRIVER');
-    $dbHost = $_ENV['DB_HOST'] ?? getenv('DB_HOST');
-    $dbPort = $_ENV['DB_PORT'] ?? getenv('DB_PORT');
-    $dbName = $_ENV['DB_NAME'] ?? getenv('DB_NAME');
-    $dbUser = $_ENV['DB_USER'] ?? getenv('DB_USER');
-    $dbPass = $_ENV['DB_PASS'] ?? getenv('DB_PASS');
+    $host = $_ENV['MYSQLHOST'] ?? $_ENV['DB_HOST'] ?? 'localhost';
+    $port = $_ENV['MYSQLPORT'] ?? $_ENV['DB_PORT'] ?? '3306';
+    $database = $_ENV['MYSQLDATABASE'] ?? $_ENV['DB_NAME'] ?? 'cmitmis';
+    $username = $_ENV['MYSQLUSER'] ?? $_ENV['DB_USER'] ?? 'root';
+    $password = $_ENV['MYSQLPASSWORD'] ?? $_ENV['DB_PASS'] ?? '';
 
-    $db = new Database($dbDriver, [
-        'host' => $dbHost,
-        'port' => $dbPort,
-        'dbname' => $dbName
-    ], $dbUser, $dbPass);
+    echo "Connecting to database: {$host}:{$port}\n";
+    echo "Database: {$database}\n";
+
+    $db = new Database($_ENV['DB_DRIVER'] ?? 'mysql', [
+        'host' => $host,
+        'port' => $port,
+        'dbname' => $database
+    ], $username, $password);
 
     // Execute the main database schema
     $sqlFile = file_get_contents("./database.sql");
