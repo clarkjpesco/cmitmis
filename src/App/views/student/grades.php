@@ -68,14 +68,14 @@
 
         <!-- Grades Table -->
         <div class="bg-white rounded-lg shadow">
-            <div class="p-6 border-b border-gray-200">
-                <div class="flex justify-between items-center">
+            <div class="p-4 sm:p-6 border-b border-gray-200">
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800">Grade Details</h3>
                         <p class="text-sm text-gray-500 mt-1">Your academic performance by subject</p>
                     </div>
                     <?php if (!empty($semesters)): ?>
-                        <select id="semesterFilter" class="rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <select id="semesterFilter" class="rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
                             <option value="">All Semesters</option>
                             <?php foreach ($semesters as $sem): ?>
                                 <option value="<?php echo e($sem['semester'] . '|' . $sem['school_year']); ?>">
@@ -87,7 +87,8 @@
                 </div>
             </div>
 
-            <div class="overflow-x-auto">
+            <!-- Desktop Table View -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="w-full">
                     <thead class="bg-gray-50 border-b border-gray-200">
                         <tr>
@@ -110,7 +111,7 @@
                             </tr>
                         <?php else: ?>
                             <?php foreach ($grades as $grade): ?>
-                                <tr class="hover:bg-gray-50 transition-colors" data-semester="<?php echo e($grade['semester']); ?>" data-year="<?php echo e($grade['school_year']); ?>">
+                                <tr class="hover:bg-gray-50 transition-colors grade-row" data-semester="<?php echo e($grade['semester']); ?>" data-year="<?php echo e($grade['school_year']); ?>">
                                     <td class="px-6 py-4">
                                         <div class="text-sm font-medium text-gray-900"><?php echo e($grade['code']); ?></div>
                                         <div class="text-sm text-gray-500"><?php echo e($grade['subject_name']); ?></div>
@@ -131,7 +132,7 @@
                                     <td class="px-6 py-4">
                                         <?php if (isset($grade['grade']) && $grade['grade']): ?>
                                             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold 
-                                        <?php echo $grade['grade'] <= 3.0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
+                                <?php echo $grade['grade'] <= 3.0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                                 <?php echo e(number_format($grade['grade'], 2)); ?>
                                             </span>
                                         <?php else: ?>
@@ -143,11 +144,11 @@
                                     <td class="px-6 py-4 text-sm">
                                         <?php if (isset($grade['remarks']) && $grade['remarks']): ?>
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium
-                                            <?php
+                                    <?php
                                             if ($grade['remarks'] === 'Passed') echo 'bg-green-100 text-green-800';
                                             elseif ($grade['remarks'] === 'Failed') echo 'bg-red-100 text-red-800';
                                             else echo 'bg-yellow-100 text-yellow-800';
-                                            ?>">
+                                    ?>">
                                                 <?php echo e($grade['remarks']); ?>
                                             </span>
                                         <?php else: ?>
@@ -160,7 +161,86 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Mobile Card View -->
+            <div class="md:hidden">
+                <?php if (empty($grades)): ?>
+                    <div class="p-6 text-center">
+                        <i class="fas fa-inbox text-gray-300 text-5xl mb-4"></i>
+                        <p class="text-gray-500 text-lg font-medium mb-2">No grades available</p>
+                        <p class="text-gray-400 text-sm">You don't have any enrolled subjects yet</p>
+                    </div>
+                <?php else: ?>
+                    <div class="divide-y divide-gray-200">
+                        <?php foreach ($grades as $grade): ?>
+                            <div class="p-4 hover:bg-gray-50 transition-colors grade-card" data-semester="<?php echo e($grade['semester']); ?>" data-year="<?php echo e($grade['school_year']); ?>">
+                                <!-- Subject Header -->
+                                <div class="mb-3 pb-3 border-b border-gray-100">
+                                    <div class="text-sm font-bold text-gray-900"><?php echo e($grade['code']); ?></div>
+                                    <div class="text-sm text-gray-600"><?php echo e($grade['subject_name']); ?></div>
+                                </div>
+
+                                <!-- Grade and Remarks (Prominent) -->
+                                <div class="flex items-center justify-between mb-3 p-3 bg-gray-50 rounded-lg">
+                                    <div>
+                                        <div class="text-xs text-gray-500 mb-1">Grade</div>
+                                        <?php if (isset($grade['grade']) && $grade['grade']): ?>
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-base font-bold 
+                                    <?php echo $grade['grade'] <= 3.0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
+                                                <?php echo e(number_format($grade['grade'], 2)); ?>
+                                            </span>
+                                        <?php else: ?>
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-600">
+                                                <i class="fas fa-clock mr-1"></i>Pending
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-xs text-gray-500 mb-1">Remarks</div>
+                                        <?php if (isset($grade['remarks']) && $grade['remarks']): ?>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium
+                                    <?php
+                                            if ($grade['remarks'] === 'Passed') echo 'bg-green-100 text-green-800';
+                                            elseif ($grade['remarks'] === 'Failed') echo 'bg-red-100 text-red-800';
+                                            else echo 'bg-yellow-100 text-yellow-800';
+                                    ?>">
+                                                <?php echo e($grade['remarks']); ?>
+                                            </span>
+                                        <?php else: ?>
+                                            <span class="text-gray-400">-</span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+
+                                <!-- Other Details -->
+                                <div class="space-y-2">
+                                    <div class="flex items-center text-sm text-gray-700">
+                                        <i class="fas fa-user-tie text-gray-400 mr-2 w-4 flex-shrink-0"></i>
+                                        <span class="font-medium text-gray-500 w-24">Instructor:</span>
+                                        <span class="truncate"><?php echo e($grade['instructor']); ?></span>
+                                    </div>
+
+                                    <div class="flex items-center text-sm text-gray-700">
+                                        <i class="fas fa-calendar text-gray-400 mr-2 w-4 flex-shrink-0"></i>
+                                        <span class="font-medium text-gray-500 w-24">Semester:</span>
+                                        <span><?php echo e(ucfirst($grade['semester']) . ' - ' . $grade['school_year']); ?></span>
+                                    </div>
+
+                                    <div class="flex items-center text-sm text-gray-700">
+                                        <i class="fas fa-book text-gray-400 mr-2 w-4 flex-shrink-0"></i>
+                                        <span class="font-medium text-gray-500 w-24">Units:</span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                            <?php echo e($grade['units']); ?> units
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
+
 
         <!-- Performance Summary -->
         <?php if (!empty($grades) && isset($statistics['gpa'])): ?>
@@ -260,9 +340,12 @@
     });
 
     function filterBySemester(value) {
-        const rows = document.querySelectorAll('tbody tr[data-semester]');
+        // Get both desktop rows and mobile cards
+        const desktopRows = document.querySelectorAll('.grade-row');
+        const mobileCards = document.querySelectorAll('.grade-card');
 
-        rows.forEach(row => {
+        // Filter desktop rows
+        desktopRows.forEach(row => {
             if (!value) {
                 row.style.display = '';
             } else {
@@ -274,6 +357,23 @@
                     row.style.display = '';
                 } else {
                     row.style.display = 'none';
+                }
+            }
+        });
+
+        // Filter mobile cards
+        mobileCards.forEach(card => {
+            if (!value) {
+                card.style.display = 'block';
+            } else {
+                const [semester, schoolYear] = value.split('|');
+                const cardSemester = card.dataset.semester;
+                const cardYear = card.dataset.year;
+
+                if (cardSemester === semester && cardYear === schoolYear) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
                 }
             }
         });

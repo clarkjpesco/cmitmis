@@ -126,40 +126,40 @@
                         <?php else: ?>
                             <div class="space-y-4">
                                 <?php foreach ($schedule as $class): ?>
-                                    <div class="border-2 border-gray-100 rounded-xl p-5 hover:border-blue-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-r from-white to-gray-50">
-                                        <div class="flex items-start justify-between">
+                                    <div class="border-2 border-gray-100 rounded-xl p-4 sm:p-5 hover:border-blue-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-r from-white to-gray-50">
+                                        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                                             <div class="flex-1">
-                                                <div class="flex items-start">
-                                                    <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
-                                                        <i class="fas fa-book text-blue-600 text-lg"></i>
+                                                <div class="flex items-start gap-3">
+                                                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center flex-shrink-0">
+                                                        <i class="fas fa-book text-blue-600 text-base sm:text-lg"></i>
                                                     </div>
-                                                    <div class="flex-1">
-                                                        <h4 class="font-bold text-gray-900 text-lg mb-3">
+                                                    <div class="flex-1 min-w-0">
+                                                        <h4 class="font-bold text-gray-900 text-base sm:text-lg mb-3 leading-tight">
                                                             <?php echo e($class['code']); ?> - <?php echo e($class['subject_name']); ?>
                                                         </h4>
-                                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                                                             <div class="flex items-center text-sm text-gray-600 bg-white px-3 py-2 rounded-lg">
-                                                                <i class="fas fa-calendar text-blue-500 mr-2 w-4"></i>
+                                                                <i class="fas fa-calendar text-blue-500 mr-2 w-4 flex-shrink-0"></i>
                                                                 <span class="font-medium"><?php echo e($class['day']); ?></span>
                                                             </div>
                                                             <div class="flex items-center text-sm text-gray-600 bg-white px-3 py-2 rounded-lg">
-                                                                <i class="fas fa-clock text-green-500 mr-2 w-4"></i>
+                                                                <i class="fas fa-clock text-green-500 mr-2 w-4 flex-shrink-0"></i>
                                                                 <span class="font-medium"><?php echo e($class['time']); ?></span>
                                                             </div>
                                                             <div class="flex items-center text-sm text-gray-600 bg-white px-3 py-2 rounded-lg">
-                                                                <i class="fas fa-door-open text-purple-500 mr-2 w-4"></i>
+                                                                <i class="fas fa-door-open text-purple-500 mr-2 w-4 flex-shrink-0"></i>
                                                                 <span class="font-medium">Room <?php echo e($class['room']); ?></span>
                                                             </div>
                                                             <div class="flex items-center text-sm text-gray-600 bg-white px-3 py-2 rounded-lg">
-                                                                <i class="fas fa-user-tie text-orange-500 mr-2 w-4"></i>
-                                                                <span class="font-medium"><?php echo e($class['instructor']); ?></span>
+                                                                <i class="fas fa-user-tie text-orange-500 mr-2 w-4 flex-shrink-0"></i>
+                                                                <span class="font-medium truncate"><?php echo e($class['instructor']); ?></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="ml-4">
-                                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-bold bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md">
+                                            <div class="flex justify-end sm:ml-4">
+                                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-bold bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md whitespace-nowrap">
                                                     <?php echo e($class['units']); ?> units
                                                 </span>
                                             </div>

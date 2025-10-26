@@ -17,7 +17,8 @@
         <?php else: ?>
             <!-- Schedule Table -->
             <div class="bg-white rounded-lg shadow overflow-hidden">
-                <div class="overflow-x-auto">
+                <!-- Desktop Table View -->
+                <div class="hidden md:block overflow-x-auto">
                     <table class="w-full">
                         <thead class="bg-gray-50 border-b border-gray-200">
                             <tr>
@@ -61,6 +62,51 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Mobile Card View -->
+                <div class="md:hidden divide-y divide-gray-200">
+                    <?php foreach ($schedule as $class): ?>
+                        <div class="p-4 hover:bg-gray-50 transition-colors schedule-card" data-day="<?php echo e($class['day']); ?>">
+                            <div class="mb-3">
+                                <div class="text-sm font-bold text-gray-900"><?php echo e($class['code']); ?></div>
+                                <div class="text-sm text-gray-600"><?php echo e($class['subject_name']); ?></div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-calendar text-gray-400 mr-2 w-4"></i>
+                                    <span class="font-medium text-gray-500 w-20">Day:</span>
+                                    <span><?php echo e($class['day']); ?></span>
+                                </div>
+
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-clock text-gray-400 mr-2 w-4"></i>
+                                    <span class="font-medium text-gray-500 w-20">Time:</span>
+                                    <span><?php echo e($class['time']); ?></span>
+                                </div>
+
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-door-open text-gray-400 mr-2 w-4"></i>
+                                    <span class="font-medium text-gray-500 w-20">Room:</span>
+                                    <span><?php echo e($class['room']); ?></span>
+                                </div>
+
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-user-tie text-gray-400 mr-2 w-4"></i>
+                                    <span class="font-medium text-gray-500 w-20">Instructor:</span>
+                                    <span><?php echo e($class['instructor']); ?></span>
+                                </div>
+
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <span class="font-medium text-gray-500 ml-6 w-20">Units:</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        <?php echo e($class['units']); ?> units
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
 
@@ -130,7 +176,9 @@
 
 <script>
     function filterByDay(day) {
-        const rows = document.querySelectorAll('tbody tr');
+        // Get both desktop rows and mobile cards
+        const desktopRows = document.querySelectorAll('tbody tr');
+        const mobileCards = document.querySelectorAll('.schedule-card');
         const buttons = document.querySelectorAll('.day-filter-btn');
 
         // Update button styles
@@ -141,13 +189,23 @@
         event.target.classList.remove('bg-gray-100', 'text-gray-700');
         event.target.classList.add('active', 'bg-primary', 'text-white');
 
-        // Filter rows
-        rows.forEach(row => {
+        // Filter desktop table rows
+        desktopRows.forEach(row => {
             const dayCell = row.querySelector('td:nth-child(2)').textContent;
             if (day === '' || dayCell.includes(day)) {
                 row.style.display = '';
             } else {
                 row.style.display = 'none';
+            }
+        });
+
+        // Filter mobile cards using data-day attribute
+        mobileCards.forEach(card => {
+            const cardDay = card.getAttribute('data-day');
+            if (day === '' || cardDay.includes(day)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
             }
         });
     }
