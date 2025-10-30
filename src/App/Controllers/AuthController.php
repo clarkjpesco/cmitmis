@@ -18,19 +18,6 @@ class AuthController
 
     ) {}
 
-    public function registerView()
-    {
-        echo $this->view->render('register.php');
-    }
-    public function register()
-    {
-        $this->validatorService->validateRegister($_POST);
-        $this->userService->isUserNameTaken($_POST['username']);
-        $this->userService->isEmailTaken($_POST['email']);
-        $this->userService->create($_POST);
-        redirectTo('/');
-    }
-
     public function loginView()
     {
         echo $this->view->render('login.php');

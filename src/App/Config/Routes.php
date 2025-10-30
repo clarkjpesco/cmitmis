@@ -22,9 +22,6 @@ function registerRoutes(App $app)
 {
     $app->get('/', [HomeController::class, 'home']);
 
-    $app->get('/register', [AuthController::class, 'registerView'])->add(GuestOnlyMiddleware::class);
-    $app->post('/register', [AuthController::class, 'register'])->add(GuestOnlyMiddleware::class);
-
     $app->get('/login', [AuthController::class, 'loginView'])->add(GuestOnlyMiddleware::class);
     $app->post('/login', [AuthController::class, 'login'])->add(GuestOnlyMiddleware::class);
 
@@ -94,9 +91,7 @@ function registerRoutes(App $app)
     $app->post('/admin/students/import', [AdminController::class, 'importStudents'])->add(AdminOnlyMiddleware::class);
     $app->get('/admin/students/import/template', [AdminController::class, 'downloadImportTemplate'])->add(AdminOnlyMiddleware::class);
 
-    // Progress API
-    // $app->get('/admin/students/import/progress', [AdminController::class, 'getImportProgress'])->add(AdminOnlyMiddleware::class);
-    // $app->get('/admin/students/import/progress-page', [AdminController::class, 'importProgressPage'])->add(AdminOnlyMiddleware::class);
+
 
     $app->get('/admin/students/import/progress', [AdminController::class, 'getImportProgress']);
     $app->get('/admin/students/import/progress-page', [AdminController::class, 'importProgressPage']);
